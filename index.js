@@ -162,10 +162,14 @@ const stepForwardButton = document.getElementById('stepForwardButton');
 
 // Speed slider handler
 speedSlider.addEventListener('input', (event) => {
-    // TODO: Implement speed change logic
-    const newSpeed = event.target.value;
-    speedValue.textContent = `${newSpeed}ms`;
-    console.log('Speed changed to:', newSpeed);
+  speed = parseInt(event.target.value);
+  speedValue.textContent = `${speed}ms`;
+
+  // If simulation is running, restart it with the new speed
+  if (isRunning) {
+    stopSimulation();
+    startSimulation();
+  }
 });
 
 // Step buttons handlers
