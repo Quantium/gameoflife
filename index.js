@@ -32,10 +32,35 @@ function drawGrid() {
 }
 
 function toggleCell(col, row) {
+    console.log("isAlive: ",isAlive(col,row));
+    console.log("Neighbors: ",countNeighbors(col,row));
     grid[col][row] = grid[col][row] ? 0 : 1;
     drawGrid();
 }
-document.body.appendChild(startButton);
+function isAlive(col,row){
+    return grid[col][row] === 1
+}
+
+function countNeighbors(x,y){
+   let c = 0;
+   for (let i = x-1; i <= x+1; i++ ){
+    for (let j = y-1; j <= y+1; j++){
+        // X is under the limits
+        let xvalid = i >= 0 && i < grid.length;
+        // Y is under the limits
+        let yvalid = j >= 0 && j < grid.length;
+        // It isn't the center
+        let cvalid = !(x==i && y==j)
+
+        let valid = xvalid && yvalid && cvalid;
+        if(valid){
+            c += grid[i][j];
+        }
+    }
+   }
+   return c;
+}
+
 canvas.addEventListener('click', (event) => {
     const rect = canvas.getBoundingClientRect();
     const x = event.clientX - rect.left;
