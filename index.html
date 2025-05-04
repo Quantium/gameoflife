@@ -6,16 +6,7 @@
     <title>Game of Life</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@heroicons/v2/24/outline/esm/index.js"></script>
-    <style>
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-        }
-        .accordion-content.open {
-            max-height: 500px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-black min-h-screen flex items-center justify-center p-4">
     <div class="flex items-start gap-8">
@@ -100,6 +91,43 @@
                 </div>
             </div>
         </div>
+        <!-- Right Pane: Patterns Tabs -->
+        <div class="w-80 bg-gray-900 rounded-lg shadow-lg p-4 text-white flex flex-col gap-4">
+            <div class="border-b border-gray-700 mb-4 flex">
+                <button id="tab-stills" class="px-4 py-2 focus:outline-none font-semibold text-blue-400 border-b-2 border-blue-400" onclick="showPatternTab('stills')">Stills</button>
+                <button id="tab-oscillators" class="px-4 py-2 focus:outline-none font-semibold text-gray-300 hover:text-blue-400" onclick="showPatternTab('oscillators')">Oscillators</button>
+                <button id="tab-spaceships" class="px-4 py-2 focus:outline-none font-semibold text-gray-300 hover:text-blue-400" onclick="showPatternTab('spaceships')">Spaceships</button>
+            </div>
+            <div id="patterns-stills" class="pattern-tab">
+                <label for="stills-combo" class="block mb-2">Still lifes</label>
+                <select id="stills-combo" class="w-full p-2 rounded bg-gray-800 border border-gray-700">
+                    <option>Block</option>
+                    <option>Bee-hive</option>
+                    <option>Loaf</option>
+                    <option>Boat</option>
+                    <option>Tub</option>
+                </select>
+            </div>
+            <div id="patterns-oscillators" class="pattern-tab hidden">
+                <label for="oscillators-combo" class="block mb-2">Oscillators</label>
+                <select id="oscillators-combo" class="w-full p-2 rounded bg-gray-800 border border-gray-700">
+                    <option>Blinker (period 2)</option>
+                    <option>Toad (period 2)</option>
+                    <option>Beacon (period 2)</option>
+                    <option>Pulsar (period 3)</option>
+                    <option>Penta-decathlon (period 15)</option>
+                </select>
+            </div>
+            <div id="patterns-spaceships" class="pattern-tab hidden">
+                <label for="spaceships-combo" class="block mb-2">Spaceships</label>
+                <select id="spaceships-combo" class="w-full p-2 rounded bg-gray-800 border border-gray-700">
+                    <option>Glider</option>
+                    <option>Light-weight spaceship (LWSS)</option>
+                    <option>Middle-weight spaceship (MWSS)</option>
+                    <option>Heavy-weight spaceship (HWSS)</option>
+                </select>
+            </div>
+        </div>
     </div>
     <script>
         function toggleAccordion(id) {
@@ -107,6 +135,20 @@
             const icon = document.getElementById(`${id}-icon`);
             content.classList.toggle('open');
             icon.classList.toggle('rotate-180');
+        }
+        function showPatternTab(tab) {
+            document.getElementById('tab-stills').classList.remove('text-blue-400', 'border-blue-400');
+            document.getElementById('tab-oscillators').classList.remove('text-blue-400', 'border-blue-400');
+            document.getElementById('tab-spaceships').classList.remove('text-blue-400', 'border-blue-400');
+            document.getElementById('tab-stills').classList.add('text-gray-300');
+            document.getElementById('tab-oscillators').classList.add('text-gray-300');
+            document.getElementById('tab-spaceships').classList.add('text-gray-300');
+            document.getElementById(`tab-${tab}`).classList.add('text-blue-400', 'border-blue-400');
+            document.getElementById(`tab-${tab}`).classList.remove('text-gray-300');
+            document.getElementById('patterns-stills').classList.add('hidden');
+            document.getElementById('patterns-oscillators').classList.add('hidden');
+            document.getElementById('patterns-spaceships').classList.add('hidden');
+            document.getElementById(`patterns-${tab}`).classList.remove('hidden');
         }
     </script>
     <script src="index.js"></script>

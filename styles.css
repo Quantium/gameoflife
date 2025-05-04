@@ -1,0 +1,21 @@
+/* Accordion styles */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+.accordion-content.open {
+    max-height: 500px;
+}
+
+/* (Unused) Toggle switch styles - kept for reference */
+#startToggle:checked + div > .dot {
+    transform: translateX(100%);
+    background-color: #3b82f6; /* Tailwind blue-500 */
+}
+#startToggle + div > .dot {
+    transform: translateX(0);
+}
+#startToggle:checked + div {
+    background-color: #60a5fa; /* Tailwind blue-400 */
+} 
