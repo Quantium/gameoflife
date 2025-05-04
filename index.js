@@ -1,18 +1,24 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-canvas.width = 600;
-canvas.height = 600;
+canvas.width = 800;
+canvas.height = 800;
 
 // Grid settings
-const cellSize = 20;
-const cols = canvas.width / cellSize;
-const rows = canvas.height / cellSize;
-
+let cellSize = 20;
+let cols = canvas.width / cellSize;
+let rows = canvas.height / cellSize;
 let grid = Array(cols).fill().map(() => Array(rows).fill(0));
 
 let simulationInterval = null;
 let isRunning = false;
+
+function init(cSize){
+    cellSize = cSize;
+    cols = canvas.width / cellSize;
+    rows = canvas.height / cellSize;
+    grid = Array(cols).fill().map(() => Array(rows).fill(0));
+}
 
 function drawGrid() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -122,6 +128,8 @@ canvas.addEventListener('click', (event) => {
     
     toggleCell(col, row);
 });
+
+init(10);
 
 drawGrid();
 
