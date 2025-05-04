@@ -100,6 +100,7 @@ function stopSimulation() {
 }
 
 const startButton = document.getElementById('startButton');
+const startIcon = document.getElementById('startIcon');
 const clearButton = document.getElementById('clearButton');
 const saveButton = document.getElementById('saveButton');
 const speedSlider = document.getElementById('speedSlider');
@@ -148,10 +149,14 @@ function loadSavedState(stateName) {
 startButton.addEventListener('click', () => {
     if (isRunning) {
         stopSimulation();
-        startButton.textContent = 'Start';
+        // Toggle to play icon
+        startIcon.classList.remove('fa-stop');
+        startIcon.classList.add('fa-play');
     } else {
         startSimulation();
-        startButton.textContent = 'Stop';
+        // Toggle to stop icon
+        startIcon.classList.remove('fa-play');
+        startIcon.classList.add('fa-stop');
     }
 });
 
