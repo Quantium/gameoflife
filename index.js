@@ -61,7 +61,6 @@ function countNeighbors(x,y){
    return c;
 }
 
-// Tick
 function nextGeneration() {
     console.log("next");
     let newGrid = grid.map(row => row.slice());
@@ -124,5 +123,16 @@ canvas.addEventListener('click', (event) => {
     toggleCell(col, row);
 });
 
-// Initial draw
 drawGrid();
+
+// Export for testing
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        grid,
+        toggleCell,
+        drawGrid,
+        cols,
+        rows,
+        cellSize
+    };
+}

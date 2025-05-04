@@ -1,7 +1,7 @@
 {
   "name": "gameoflife",
   "version": "1.0.0",
-  "description": "Game Of life just for fun",
+  "description": "Conway's Game of Life implementation... Just 4 Fun",
   "keywords": [
     "gameoflife"
   ],
@@ -18,6 +18,17 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "moduleFileExtensions": ["js", "json"],
+    "transform": {},
+    "testMatch": ["**/__tests__/**/*.test.js"]
   }
 }
