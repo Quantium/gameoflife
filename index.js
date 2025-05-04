@@ -10,6 +10,7 @@ let cellSize = 20;
 let cols = canvas.width / cellSize;
 let rows = canvas.height / cellSize;
 let grid = Array(cols).fill().map(() => Array(rows).fill(0));
+let gridHistory = [];
 
 let simulationInterval = null;
 let isRunning = false;
@@ -68,20 +69,29 @@ function countNeighbors(x,y){
    return c;
 }
 
-function nextGeneration() {
-    //console.log("next");
-    let newGrid = grid.map(row => row.slice());
+function updateStepBackButton() {
+  stepBackButton.disabled = gridHistory.length === 0;
+  if (stepBackButton.disabled) {
+    stepBackButton.classList.add('opacity-50', 'cursor-not-allowed');
+  } else {
+    stepBackButton.classList.remove('opacity-50', 'cursor-not-allowed');
+  }
+}
 
+function nextGeneration() {
+    // Save a deep copy of the current grid to history
+    gridHistory.push(grid.map(row => row.slice()));
+    let newGrid = grid.map(row => row.slice());
     for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
             let neighbors = countNeighbors(i,j);
             let alive = isAlive(i,j);
-            //newGrid[i][j] = +((alive && (neighbors == 2 || neighbors == 3)) || (!alive && neighbors == 3)) 
             newGrid[i][j] = +(neighbors == 3 || (alive && neighbors == 2))
         }
     }
     grid = newGrid.map(row => row.slice());
-    drawGrid();        
+    drawGrid();
+    updateStepBackButton();
 }
 
 function startSimulation() {
@@ -119,13 +129,15 @@ speedSlider.addEventListener('input', (event) => {
 
 // Step buttons handlers
 stepBackButton.addEventListener('click', () => {
-    // TODO: Implement step back logic
-    console.log('Step back clicked');
+    if (gridHistory.length > 0) {
+        grid = gridHistory.pop(); // Restore the previous state
+        drawGrid();
+        updateStepBackButton();
+    }
 });
 
 stepForwardButton.addEventListener('click', () => {
-    // TODO: Implement step forward logic
-    console.log('Step forward clicked');
+    nextGeneration();
 });
 
 // Save state button handler
@@ -162,7 +174,9 @@ startButton.addEventListener('click', () => {
 
 clearButton.addEventListener('click', () => {
     grid = Array(cols).fill().map(() => Array(rows).fill(0));
+    gridHistory = []; // Clear history as well
     drawGrid();
+    updateStepBackButton();
 });
 
 canvas.addEventListener('click', (event) => {
@@ -190,3 +204,6 @@ if (typeof module !== 'undefined' && module.exports) {
         cellSize
     };
 }
+
+// On page load
+updateStepBackButton();
