@@ -5,6 +5,7 @@ canvas.width = 800;
 canvas.height = 800;
 
 // Grid settings
+let speed = 100;
 let cellSize = 20;
 let cols = canvas.width / cellSize;
 let rows = canvas.height / cellSize;
@@ -38,8 +39,8 @@ function drawGrid() {
 }
 
 function toggleCell(col, row) {
-    console.log("isAlive: ",isAlive(col,row));
-    console.log("Neighbors: ",countNeighbors(col,row));
+    //console.log("isAlive: ",isAlive(col,row));
+    //console.log("Neighbors: ",countNeighbors(col,row));
     grid[col][row] = grid[col][row] ? 0 : 1;
     drawGrid();
 }
@@ -68,7 +69,7 @@ function countNeighbors(x,y){
 }
 
 function nextGeneration() {
-    console.log("next");
+    //console.log("next");
     let newGrid = grid.map(row => row.slice());
 
     for (let i = 0; i < cols; i++) {
@@ -86,7 +87,7 @@ function nextGeneration() {
 function startSimulation() {
     if (!isRunning) {
         isRunning = true;
-        simulationInterval = setInterval(nextGeneration, 500);
+        simulationInterval = setInterval(nextGeneration, speed);
     }
 }
 
@@ -100,6 +101,7 @@ function stopSimulation() {
 
 const startButton = document.createElement('button');
 const clearButton = document.createElement('button');
+
 startButton.textContent = 'Start';
 clearButton.textContent = 'Clear'
 startButton.addEventListener('click', () => {
@@ -130,7 +132,6 @@ canvas.addEventListener('click', (event) => {
 });
 
 init(10);
-
 drawGrid();
 
 // Export for testing
