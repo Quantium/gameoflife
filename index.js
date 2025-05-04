@@ -63,15 +63,18 @@ function countNeighbors(x,y){
 
 // Tick
 function nextGeneration() {
+    console.log("next");
+    let newGrid = grid.map(row => row.slice());
 
     for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
-            const cell = grid[i][j];
             let neighbors = countNeighbors(i,j);
             let alive = isAlive(i,j);
-            grid[i][j] = +(alive && (neighbors < 2 || neighbors > 3))
+            //newGrid[i][j] = +((alive && (neighbors == 2 || neighbors == 3)) || (!alive && neighbors == 3)) 
+            newGrid[i][j] = +(neighbors == 3 || (alive && neighbors == 2))
         }
     }
+    grid = newGrid.map(row => row.slice());
     drawGrid();        
 }
 
@@ -91,7 +94,9 @@ function stopSimulation() {
 }
 
 const startButton = document.createElement('button');
+const clearButton = document.createElement('button');
 startButton.textContent = 'Start';
+clearButton.textContent = 'Clear'
 startButton.addEventListener('click', () => {
     if (isRunning) {
         stopSimulation();
@@ -101,8 +106,13 @@ startButton.addEventListener('click', () => {
         startButton.textContent = 'Stop';
     }
 });
-
+clearButton.addEventListener('click', () => {
+    grid = Array(cols).fill().map(() => Array(rows).fill(0));
+    drawGrid();
+})
 document.body.appendChild(startButton);
+document.body.appendChild(clearButton);
+
 canvas.addEventListener('click', (event) => {
     const rect = canvas.getBoundingClientRect();
     const x = event.clientX - rect.left;
