@@ -1,5 +1,7 @@
 # Game of Life
 
+ > Disclaimer: This readme [only] was generated with AI (Except this paragraph). the code don't tough. I've doesn't even use autocomplete because the only reason to do this is to have some fun.
+
 A JavaScript implementation of Conway's Game of Life using HTML5 Canvas.
 
 ## Description
