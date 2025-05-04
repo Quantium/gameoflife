@@ -15,6 +15,9 @@ let gridHistory = [];
 let simulationInterval = null;
 let isRunning = false;
 
+const emptyBanner = document.getElementById('emptyBanner');
+const closeBanner = document.getElementById('closeBanner');
+
 function init(cSize){
     cellSize = cSize;
     cols = canvas.width / cellSize;
@@ -40,11 +43,11 @@ function drawGrid() {
 }
 
 function toggleCell(col, row) {
-    //console.log("isAlive: ",isAlive(col,row));
-    //console.log("Neighbors: ",countNeighbors(col,row));
     grid[col][row] = grid[col][row] ? 0 : 1;
     drawGrid();
+    updateForwardAndStartButtons();
 }
+
 function isAlive(col,row){
     return grid[col][row] === 1
 }
@@ -78,6 +81,35 @@ function updateStepBackButton() {
   }
 }
 
+function isGridAllDead() {
+  return grid.every(col => col.every(cell => cell === 0));
+}
+
+function showEmptyBanner() {
+  emptyBanner.style.display = 'flex';
+  // Hide after 5 seconds (5000 ms)
+  setTimeout(() => {
+    emptyBanner.style.display = 'none';
+  }, 2000);
+}
+
+closeBanner.addEventListener('click', () => {
+  emptyBanner.style.display = 'none';
+});
+
+function updateForwardAndStartButtons() {
+  const isEmpty = isGridAllDead();
+  startButton.disabled = isEmpty;
+  stepForwardButton.disabled = isEmpty;
+  if (isEmpty) {
+    startButton.classList.add('opacity-50', 'cursor-not-allowed');
+    stepForwardButton.classList.add('opacity-50', 'cursor-not-allowed');
+  } else {
+    startButton.classList.remove('opacity-50', 'cursor-not-allowed');
+    stepForwardButton.classList.remove('opacity-50', 'cursor-not-allowed');
+  }
+}
+
 function nextGeneration() {
     // Save a deep copy of the current grid to history
     gridHistory.push(grid.map(row => row.slice()));
@@ -92,6 +124,15 @@ function nextGeneration() {
     grid = newGrid.map(row => row.slice());
     drawGrid();
     updateStepBackButton();
+    updateForwardAndStartButtons();
+
+    // Stop simulation if grid is all dead
+    if (isGridAllDead()) {
+      stopSimulation();
+      startIcon.classList.remove('fa-stop');
+      startIcon.classList.add('fa-play');
+      showEmptyBanner();
+    }
 }
 
 function startSimulation() {
@@ -133,6 +174,7 @@ stepBackButton.addEventListener('click', () => {
         grid = gridHistory.pop(); // Restore the previous state
         drawGrid();
         updateStepBackButton();
+        updateForwardAndStartButtons();
     }
 });
 
@@ -177,6 +219,7 @@ clearButton.addEventListener('click', () => {
     gridHistory = []; // Clear history as well
     drawGrid();
     updateStepBackButton();
+    updateForwardAndStartButtons();
 });
 
 canvas.addEventListener('click', (event) => {
@@ -207,3 +250,4 @@ if (typeof module !== 'undefined' && module.exports) {
 
 // On page load
 updateStepBackButton();
+updateForwardAndStartButtons();
