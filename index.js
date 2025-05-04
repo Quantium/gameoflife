@@ -61,6 +61,48 @@ function countNeighbors(x,y){
    return c;
 }
 
+// Tick
+function nextGeneration() {
+
+    for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+            const cell = grid[i][j];
+            let neighbors = countNeighbors(i,j);
+            let alive = isAlive(i,j);
+            grid[i][j] = +(alive && (neighbors < 2 || neighbors > 3))
+        }
+    }
+    drawGrid();        
+}
+
+function startSimulation() {
+    if (!isRunning) {
+        isRunning = true;
+        simulationInterval = setInterval(nextGeneration, 500);
+    }
+}
+
+function stopSimulation() {
+    if (isRunning) {
+        isRunning = false;
+        clearInterval(simulationInterval);
+        simulationInterval = null;
+    }
+}
+
+const startButton = document.createElement('button');
+startButton.textContent = 'Start';
+startButton.addEventListener('click', () => {
+    if (isRunning) {
+        stopSimulation();
+        startButton.textContent = 'Start';
+    } else {
+        startSimulation();
+        startButton.textContent = 'Stop';
+    }
+});
+
+document.body.appendChild(startButton);
 canvas.addEventListener('click', (event) => {
     const rect = canvas.getBoundingClientRect();
     const x = event.clientX - rect.left;
