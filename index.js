@@ -99,11 +99,52 @@ function stopSimulation() {
     }
 }
 
-const startButton = document.createElement('button');
-const clearButton = document.createElement('button');
+const startButton = document.getElementById('startButton');
+const clearButton = document.getElementById('clearButton');
+const saveButton = document.getElementById('saveButton');
+const speedSlider = document.getElementById('speedSlider');
+const speedValue = document.getElementById('speedValue');
+const savedStatesList = document.getElementById('savedStatesList');
+const stepBackButton = document.getElementById('stepBackButton');
+const stepForwardButton = document.getElementById('stepForwardButton');
 
-startButton.textContent = 'Start';
-clearButton.textContent = 'Clear'
+// Speed slider handler
+speedSlider.addEventListener('input', (event) => {
+    // TODO: Implement speed change logic
+    const newSpeed = event.target.value;
+    speedValue.textContent = `${newSpeed}ms`;
+    console.log('Speed changed to:', newSpeed);
+});
+
+// Step buttons handlers
+stepBackButton.addEventListener('click', () => {
+    // TODO: Implement step back logic
+    console.log('Step back clicked');
+});
+
+stepForwardButton.addEventListener('click', () => {
+    // TODO: Implement step forward logic
+    console.log('Step forward clicked');
+});
+
+// Save state button handler
+saveButton.addEventListener('click', () => {
+    // TODO: Implement save state logic
+    console.log('Save state clicked');
+});
+
+// Function to add a saved state to the list
+function addSavedState(stateName) {
+    // TODO: Implement adding saved state to the list
+    console.log('Adding saved state:', stateName);
+}
+
+// Function to load a saved state
+function loadSavedState(stateName) {
+    // TODO: Implement loading saved state
+    console.log('Loading saved state:', stateName);
+}
+
 startButton.addEventListener('click', () => {
     if (isRunning) {
         stopSimulation();
@@ -113,12 +154,11 @@ startButton.addEventListener('click', () => {
         startButton.textContent = 'Stop';
     }
 });
+
 clearButton.addEventListener('click', () => {
     grid = Array(cols).fill().map(() => Array(rows).fill(0));
     drawGrid();
-})
-document.body.appendChild(startButton);
-document.body.appendChild(clearButton);
+});
 
 canvas.addEventListener('click', (event) => {
     const rect = canvas.getBoundingClientRect();

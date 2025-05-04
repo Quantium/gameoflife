@@ -4,10 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game of Life</title>
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@heroicons/v2/24/outline/esm/index.js"></script>
+    <style>
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-content.open {
+            max-height: 500px;
+        }
+    </style>
 </head>
-<body>
-    <canvas id="gameCanvas"></canvas>
+<body class="bg-black min-h-screen flex items-center justify-center p-4">
+    <div class="flex items-start gap-8">
+        <!-- Left Panel -->
+        <div class="w-80 text-white space-y-6">
+            <div class="space-y-4">
+                <h2 class="text-2xl font-bold">Game of Life</h2>
+                <p class="text-gray-300">A cellular automaton devised by mathematician John Conway in 1970. The game follows simple rules to simulate the evolution of a grid of cells, where each cell can be either alive or dead.</p>
+            </div>
+
+            <!-- Rules Accordion -->
+            <div class="border border-gray-700 rounded-lg overflow-hidden">
+                <button class="accordion-header w-full px-4 py-3 flex justify-between items-center bg-gray-800 hover:bg-gray-700 transition-colors" onclick="toggleAccordion('rules')">
+                    <h3 class="text-xl font-bold">Rules</h3>
+                    <svg id="rules-icon" class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div id="rules-content" class="accordion-content">
+                    <div class="px-4 py-3 space-y-2 text-gray-300">
+                        <p>1. Any live cell with fewer than two live neighbors dies (underpopulation)</p>
+                        <p>2. Any live cell with two or three live neighbors lives on to the next generation</p>
+                        <p>3. Any live cell with more than three live neighbors dies (overpopulation)</p>
+                        <p>4. Any dead cell with exactly three live neighbors becomes a live cell (reproduction)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instructions Accordion -->
+            <div class="border border-gray-700 rounded-lg overflow-hidden">
+                <button class="accordion-header w-full px-4 py-3 flex justify-between items-center bg-gray-800 hover:bg-gray-700 transition-colors" onclick="toggleAccordion('instructions')">
+                    <h3 class="text-xl font-bold">Instructions</h3>
+                    <svg id="instructions-icon" class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div id="instructions-content" class="accordion-content">
+                    <div class="px-4 py-3 space-y-2 text-gray-300">
+                        <p>1. Click on cells to toggle them alive/dead</p>
+                        <p>2. Use Start/Stop to control the simulation</p>
+                        <p>3. Adjust speed with the slider</p>
+                        <p>4. Save interesting patterns</p>
+                        <p>5. Use step buttons to move frame by frame</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Game Area -->
+        <div class="flex items-center gap-8">
+            <canvas id="gameCanvas" class="border border-gray-700"></canvas>
+            <div class="flex flex-col gap-4">
+                <div class="flex gap-2">
+                    <button id="stepBackButton" class="p-2 bg-gray-700 text-white rounded hover:bg-gray-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                        </svg>
+                    </button>
+                    <button id="startButton" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">Start</button>
+                    <button id="stepForwardButton" class="p-2 bg-gray-700 text-white rounded hover:bg-gray-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+                </div>
+                <button id="clearButton" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors">Clear</button>
+                <button id="saveButton" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors">Save State</button>
+                
+                <div class="mt-4">
+                    <div class="flex items-center gap-4">
+                        <label for="speedSlider" class="text-white">Speed</label>
+                        <input type="range" id="speedSlider" min="50" max="500" value="100" class="flex-1">
+                        <span id="speedValue" class="text-white w-16 text-right">100ms</span>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h3 class="text-white mb-2">Saved States</h3>
+                    <ul id="savedStatesList" class="text-white space-y-2">
+                        <!-- Saved states will be added here dynamically -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleAccordion(id) {
+            const content = document.getElementById(`${id}-content`);
+            const icon = document.getElementById(`${id}-icon`);
+            content.classList.toggle('open');
+            icon.classList.toggle('rotate-180');
+        }
+    </script>
     <script src="index.js"></script>
 </body>
 </html> 
