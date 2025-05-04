@@ -1,0 +1,75 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(name="description" content="Conway's Game of Life - A cellular automaton simulation")
+    title Game of Life
+    script(src="https://cdn.tailwindcss.com")
+    script(src="https://unpkg.com/@heroicons/v2/24/outline/esm/index.js")
+    link(rel="stylesheet" href="styles.css")
+
+  body(class="bg-black min-h-screen flex items-center justify-center p-4")
+    main(class="flex items-start gap-8")
+      //- Left Panel
+      aside(class="w-80 text-white space-y-6")
+        header(class="space-y-4")
+          h1(class="text-2xl font-bold") Game of Life
+          p(class="text-gray-300") A cellular automaton devised by mathematician John Conway in 1970. The game follows simple rules to simulate the evolution of a grid of cells, where each cell can be either alive or dead.
+
+        //- Controls Section
+        section(class="border border-gray-700 rounded-lg overflow-hidden p-4 space-y-4")
+          div(class="flex gap-2")
+            button#stepBackButton(class="p-2 bg-gray-700 text-white rounded hover:bg-gray-600 transition-colors" aria-label="Step back")
+              svg(class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true")
+                path(stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5")
+            button#startButton(class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors") Start
+            button#stepForwardButton(class="p-2 bg-gray-700 text-white rounded hover:bg-gray-600 transition-colors" aria-label="Step forward")
+              svg(class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true")
+                path(stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5")
+          
+          div(class="flex gap-2")
+            button#clearButton(class="flex-1 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors") Clear
+            button#saveButton(class="flex-1 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors") Save State
+          
+          div(class="space-y-2")
+            label(class="text-white block" for="speedSlider") Speed
+            div(class="flex items-center gap-4")
+              input#speedSlider(class="flex-1" type="range" min="50" max="500" value="100" aria-label="Simulation speed")
+              span#speedValue(class="text-white w-16 text-right") 100ms
+
+        //- Rules Section
+        section(class="border border-gray-700 rounded-lg overflow-hidden")
+          details(class="group")
+            summary(class="w-full px-4 py-3 flex justify-between items-center bg-gray-800 hover:bg-gray-700 transition-colors cursor-pointer list-none")
+              h2(class="text-xl font-bold") Rules
+              svg(class="w-6 h-6 transform transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7")
+            div(class="px-4 py-3 space-y-2 text-gray-300")
+              ol(class="list-decimal list-inside space-y-2")
+                li Any live cell with fewer than two live neighbors dies (underpopulation)
+                li Any live cell with two or three live neighbors lives on to the next generation
+                li Any live cell with more than three live neighbors dies (overpopulation)
+                li Any dead cell with exactly three live neighbors becomes a live cell (reproduction)
+
+        //- Instructions Section
+        section(class="border border-gray-700 rounded-lg overflow-hidden")
+          details(class="group")
+            summary(class="w-full px-4 py-3 flex justify-between items-center bg-gray-800 hover:bg-gray-700 transition-colors cursor-pointer list-none")
+              h2(class="text-xl font-bold") Instructions
+              svg(class="w-6 h-6 transform transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7")
+            div(class="px-4 py-3 space-y-2 text-gray-300")
+              ol(class="list-decimal list-inside space-y-2")
+                li Click on cells to toggle them alive/dead
+                li Use Start/Stop to control the simulation
+                li Adjust speed with the slider
+                li Save interesting patterns
+                li Use step buttons to move frame by frame
+
+      //- Main Game Area
+      section(class="flex items-center gap-8")
+        figure
+          canvas#gameCanvas(class="border border-gray-700" aria-label="Game of Life grid")
+
+    script(src="index.js") 

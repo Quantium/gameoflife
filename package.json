@@ -18,8 +18,13 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
+    "start": "pug -w index.pug -o .",
+    "build": "pug index.pug -o .",
     "test": "jest",
     "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "pug": "^3.0.2"
   },
   "devDependencies": {
     "jest": "^29.7.0",
