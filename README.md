@@ -8,6 +8,10 @@ A JavaScript implementation of Conway's Game of Life using HTML5 Canvas.
 
 This project is an interactive implementation of Conway's Game of Life, a cellular automaton devised by mathematician John Conway in 1970. The game follows simple rules to simulate the evolution of a grid of cells, where each cell can be either alive or dead.
 
+### Demo
+
+[See it here](http://quantium-gameoflife.s3-website-us-east-1.amazonaws.com/)
+
 ## Rules of the Game
 
 1. Any live cell with fewer than two live neighbors dies (underpopulation)
@@ -27,8 +31,9 @@ This project is an interactive implementation of Conway's Game of Life, a cellul
 
 - Random button to generate a random initial state
 - Adjustable grid size
-- Adjustable simulation speed
-- Visual representation of live and dead cells
+- ~~Adjustable simulation speed~~ ✔️
+- Common Game of life patterns to load into the grid
+- List of different saved states
 
 ## Technologies Used
 
