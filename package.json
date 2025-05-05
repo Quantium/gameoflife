@@ -21,7 +21,8 @@
     "start": "pug -w index.pug -o .",
     "build": "pug index.pug -o .",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "deploy" : "aws s3 sync . s3://quantium-gameoflife --exclude '.*' --exclude 'node_modules/*' --exclude '__tests__/*' --exclude '*.pug' --exclude 'README.md' --exclude 'package**' --exclude 'docs/*'"
   },
   "dependencies": {
     "pug": "^3.0.2"
