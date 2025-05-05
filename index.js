@@ -22,10 +22,15 @@ function init(cSize){
     cellSize = cSize;
     cols = canvas.width / cellSize;
     rows = canvas.height / cellSize;
-    grid = Array(cols).fill().map(() => Array(rows).fill(0));
+    if(localStorage["gridStatus"]){
+        grid = decompressGrid(localStorage["gridStatus"]);
+    } else {
+        grid = Array(cols).fill().map(() => Array(rows).fill(0));
+    } 
 }
 
 function drawGrid() {
+    addSavedState();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     for (let i = 0; i < cols; i++) {
@@ -150,13 +155,60 @@ function stopSimulation() {
     }
 }
 
+// https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+function storageAvailable(type) {
+    let storage;
+    try {
+      storage = window[type];
+      const x = "__storage_test__";
+      storage.setItem(x, x);
+      storage.removeItem(x);
+      return true;
+    } catch (e) {
+      return (
+        e instanceof DOMException &&
+        e.name === "QuotaExceededError" &&
+        // acknowledge QuotaExceededError only if there's something already stored
+        storage &&
+        storage.length !== 0
+      );
+    }
+  }
+// Functions to compress and decompress the grid
+// The compression returns a string of numbers separated by commas
+function compressGrid(g){
+    let g2 = grid.map((v) => parseInt(v.join(""),2))
+    return g2.join();
+}
+function decompressGrid(s){
+  let g = s.split(",");
+  var l = g.length;
+  let g2 = g.map((v) => {
+    let tv = parseInt(v).toString(2).split("").map(v => parseInt(v));
+    let nv = Array(l-tv.length).fill(0).concat(tv);
+    return nv
+  })
+  return g2
+}
+
+// Function to add a saved state to the list
+function addSavedState() {
+    if (storageAvailable("localStorage")) {
+        localStorage.setItem("gridStatus",compressGrid(grid));
+    } else {
+        console.warn("No local storage");
+    }
+}
+
+
+  
+
 const startButton = document.getElementById('startButton');
 const startIcon = document.getElementById('startIcon');
 const clearButton = document.getElementById('clearButton');
 const saveButton = document.getElementById('saveButton');
 const speedSlider = document.getElementById('speedSlider');
 const speedValue = document.getElementById('speedValue');
-const savedStatesList = document.getElementById('savedStatesList');
 const stepBackButton = document.getElementById('stepBackButton');
 const stepForwardButton = document.getElementById('stepForwardButton');
 
@@ -185,24 +237,6 @@ stepBackButton.addEventListener('click', () => {
 stepForwardButton.addEventListener('click', () => {
     nextGeneration();
 });
-
-// Save state button handler
-saveButton.addEventListener('click', () => {
-    // TODO: Implement save state logic
-    console.log('Save state clicked');
-});
-
-// Function to add a saved state to the list
-function addSavedState(stateName) {
-    // TODO: Implement adding saved state to the list
-    console.log('Adding saved state:', stateName);
-}
-
-// Function to load a saved state
-function loadSavedState(stateName) {
-    // TODO: Implement loading saved state
-    console.log('Loading saved state:', stateName);
-}
 
 startButton.addEventListener('click', () => {
     if (isRunning) {
