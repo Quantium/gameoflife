@@ -40,6 +40,9 @@ This project is an interactive implementation of Conway's Game of Life, a cellul
 - HTML5 Canvas
 - JavaScript (ES6+)
 - CSS3
+- Docker
+- NodeJs
+- Pug
 
 ## Setup and Installation
 
