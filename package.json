@@ -18,23 +18,30 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "start": "pug -w index.pug -o .",
-    "build": "pug index.pug -o .",
+    "start": "npm run build && node app.js",
+    "watch": "node ./node_modules/pug-cli/index.js -w index.pug -o ./dist",
+    "build": "node ./node_modules/pug-cli/index.js index.pug -o ./dist",
     "test": "jest",
     "test:watch": "jest --watch",
-    "deploy" : "aws s3 sync . s3://quantium-gameoflife --exclude '.*' --exclude 'node_modules/*' --exclude '__tests__/*' --exclude '*.pug' --exclude 'README.md' --exclude 'package**' --exclude 'docs/*'"
+    "deploy": "aws s3 sync . s3://quantium-gameoflife --exclude '.*' --exclude 'node_modules/*' --exclude '__tests__/*' --exclude '*.pug' --exclude 'README.md' --exclude 'package**' --exclude 'docs/*' --exclude 'Dockerfile'"
   },
   "dependencies": {
     "pug": "^3.0.2"
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0"
+    "jest-environment-jsdom": "^29.7.0",
+    "pug-cli": "^1.0.0-alpha6"
   },
   "jest": {
     "testEnvironment": "jsdom",
-    "moduleFileExtensions": ["js", "json"],
+    "moduleFileExtensions": [
+      "js",
+      "json"
+    ],
     "transform": {},
-    "testMatch": ["**/__tests__/**/*.test.js"]
+    "testMatch": [
+      "**/__tests__/**/*.test.js"
+    ]
   }
 }
