@@ -1,14 +1,12 @@
 # Game of Life
 
-> Disclaimer: This readme was [partially] generated with AI (except this paragraph). The code was not touched. I didn't even use autocomplete because the only reason to do this is to have some fun.
+> Disclaimer: This is a test project using [Cursor](https://cursor.sh/). While the core Game of Life logic was created manually (JS mostly), most of the UI and styling was generated with the help of Cursor's AI assistance.
 
 A JavaScript implementation of [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) using HTML5 Canvas.
 
 ## Description
 
 This project is an interactive implementation of Conway's Game of Life, a cellular automaton devised by mathematician John Conway in 1970. The game follows simple rules to simulate the evolution of a grid of cells, where each cell can be either alive or dead.
-
-> **Note**: This is a test project using [Cursor](https://cursor.sh/). While the core Game of Life logic was created manually (JS mostly), most of the UI and styling was generated with the help of Cursor's AI assistance.
 
 ### Demo
 
@@ -84,19 +82,6 @@ You can run the app on an HTTP server by running:
 ```bash
 npm start
 ```
-
-### Or with Docker
-
-If you don't want to install Node.js, you can also use the Docker image by running:
-
-```bash
-docker build -t gameoflife .
-docker run -p 8000:8000 gameoflife
-```
-
-## Deploy
-
-There is a command to deploy to S3 in the package.json file. It points to one of my buckets: _s3://quantium-gameoflife_. Install the AWS CLI and change the bucket URL to deploy it to one of yours.
 
 ## Usage
 
