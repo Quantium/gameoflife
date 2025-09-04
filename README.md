@@ -8,11 +8,11 @@ A JavaScript implementation of [Conway's Game of Life](https://en.wikipedia.org/
 
 This project is an interactive implementation of Conway's Game of Life, a cellular automaton devised by mathematician John Conway in 1970. The game follows simple rules to simulate the evolution of a grid of cells, where each cell can be either alive or dead.
 
-> **Note**: This is a test project using [Cursor](https://cursor.sh/). While the core Game of Life logic was created manually, most of the UI and styling was generated with the help of Cursor's AI assistance.
+> **Note**: This is a test project using [Cursor](https://cursor.sh/). While the core Game of Life logic was created manually (JS mostly), most of the UI and styling was generated with the help of Cursor's AI assistance.
 
 ### Demo
 
-[See it here](http://quantium-gameoflife.s3-website-us-east-1.amazonaws.com/)
+[See it here](https://gol.quantium.com.mx/)
 
 ## Rules of the Game
 
